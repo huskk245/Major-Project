@@ -3,18 +3,17 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import Spline from '@splinetool/react-spline';
 import { FaArrowRight } from 'react-icons/fa';
-
-// Add this import at the top of your file
 import './smoothScroll.css';
-// Add this import for the updated ProductList component
 import ProductList from './components/ProductList';
+import LoginPage from './components/LoginPage';
+import SignUp from './components/SignUp';
 
 // Mock data - replace with actual API calls
-const mockProducts = [
-  { id: 1, name: 'Apples', location: 'Warehouse A', timestamp: new Date().toISOString(), isFresh: true },
-  { id: 2, name: 'Bananas', location: 'Warehouse B', timestamp: new Date().toISOString(), isFresh: true },
-  { id: 3, name: 'Oranges', location: 'In Transit', timestamp: new Date().toISOString(), isFresh: false },
-];
+// const mockProducts = [
+//   { id: 1, name: 'Apples', location: 'Warehouse A', timestamp: new Date().toISOString(), isFresh: true },
+//   { id: 2, name: 'Bananas', location: 'Warehouse B', timestamp: new Date().toISOString(), isFresh: true },
+//   { id: 3, name: 'Oranges', location: 'In Transit', timestamp: new Date().toISOString(), isFresh: false },
+// ];
 
 const mockSupplyChainData = [
   { name: 'Farm', uv: 4000 },
@@ -46,8 +45,8 @@ const Navbar = () => (
 const Home = () => (
   <div className="container mx-auto mt-8 flex flex-col md:flex-row items-center justify-center bg-black relative min-h-screen">
     {/* Text Section */}
-    <div className="w-full md:w-1/2 p-4 mr-25 text-center md:text-left">
-      <h1 className="text-4xl font-bold mb-4 text-white">Welcome to Food Supply Chain Transparency</h1>
+    <div className="w-full md:w-1/2 p-4 ml-4 text-center md:text-left">
+      <h1 className="text-6xl font-bold mb-4 text-white">Welcome to Food Supply Chain Transparency</h1>
       <p className="mb-4 text-white">Track and monitor food products throughout the supply chain.</p>
     </div>
 
@@ -62,15 +61,19 @@ const Home = () => (
 );
 
 const SupplyChain = () => (
-  <div className="container mx-auto mt-8">
-    <h2 className="text-2xl font-bold mb-4">Supply Chain Visualization</h2>
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <LineChart width={600} height={300} data={mockSupplyChainData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
+  <div className="container mx-auto mt-8 px-4">
+    <h2 className="text-2xl font-bold mb-4 text-white">Supply Chain Visualization</h2>
+    <div className="bg-gray-800 shadow-xl rounded-lg p-4">
+      <LineChart width={500} height={300} data={mockSupplyChainData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+        <XAxis dataKey="name" stroke="#888" />
+        <YAxis stroke="#888" />
+        <Tooltip 
+          contentStyle={{ backgroundColor: '#333', border: 'none' }}
+          labelStyle={{ color: '#fff' }}
+          itemStyle={{ color: '#8884d8' }}
+        />
+        <Legend wrapperStyle={{ color: '#888' }} />
         <Line type="monotone" dataKey="uv" stroke="#8884d8" activeDot={{ r: 8 }} />
       </LineChart>
     </div>
@@ -113,6 +116,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<ProductList />} />
             <Route path="/supply-chain" element={<SupplyChain />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUp />} />
           </Routes>
         </div>
         {/* Only show AuthButtons on the Home page */}
